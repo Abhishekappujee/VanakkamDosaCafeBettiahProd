@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Table Ordering | Abhijeet Cafe</title>
+
+  <!-- Google Fonts Outfit & Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/print.css">
+</head>
+<body style="padding-bottom: 80px;">
+
+  <!-- Connection Status Banner -->
+  <div id="connection-status-banner"></div>
+
+  <!-- Customer Glass Header -->
+  <header class="glass-header" style="position: sticky; top: 0; z-index: 90; padding: 0.875rem 1rem;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.625rem;">
+        <div style="font-size: 1.5rem;">🍽️</div>
+        <div>
+          <h1 id="header-business-name" style="font-size: 1.05rem; font-weight: 800;" class="text-gradient">
+            Cafe Restaurant
+          </h1>
+          <div class="text-xs text-secondary">Contactless QR Table Menu</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <div id="customer-profile-chip" style="display: none; align-items: center; gap: 0.35rem; background: var(--bg-tertiary); padding: 0.25rem 0.6rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); font-size: 0.75rem;">
+          <span style="font-weight: 700; color: var(--text-primary);" id="chip-customer-name">Guest</span>
+          <button class="btn btn-secondary btn-xs" onclick="customerApp.logoutCustomer()" title="Logout Customer" style="padding: 0.15rem 0.4rem; font-size: 0.7rem; margin-left: 0.2rem;">🚪 Logout</button>
+        </div>
+
+        <div style="background: var(--bg-tertiary); padding: 0.35rem 0.75rem; border-radius: var(--radius-full); border: 1px solid var(--border-color);">
+          <span class="text-xs text-muted">Table:</span>
+          <span id="header-table-name" class="font-bold text-accent text-sm">Detecting...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main style="padding: 1rem; max-width: 800px; margin: 0 auto;">
+
+    <!-- 1. MENU TAB VIEW -->
+    <div id="view-menu" class="tab-view">
+      <div style="margin-bottom: 1rem;">
+        <div id="category-pill-container" class="category-slider"></div>
+      </div>
+
+      <div id="food-grid-container" class="food-grid"></div>
+
+      <div id="floating-view-cart-btn" style="position: fixed; bottom: 74px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 95; display: none;">
+        <button class="btn btn-primary w-full shadow-lg" onclick="customerApp.switchTab('cart')" style="display: flex; justify-content: space-between; padding: 0.875rem 1.25rem;">
+          <span id="floating-cart-count" class="font-bold">0 Items</span>
+          <span class="font-bold">View Cart 🛒</span>
+          <span id="floating-cart-total" class="font-bold">₹0.00</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. CART TAB VIEW -->
+    <div id="view-cart" class="tab-view" style="display: none;">
+      <h2 class="font-bold text-xl" style="margin-bottom: 1rem;">Your Dining Cart</h2>
+      
+      <div id="cart-items-container" style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;"></div>
+
+      <div id="cart-summary-footer" class="glass-card" style="padding: 1.25rem; display: none;">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem;">
+          <div class="flex justify-between text-sm">
+            <span class="text-secondary">Subtotal</span>
+            <span id="cart-subtotal-val" class="font-semibold">₹0.00</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-secondary">GST</span>
+            <span id="cart-gst-val" class="font-semibold">₹0.00</span>
+          </div>
+          <div class="flex justify-between text-lg font-bold" style="border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+            <span>Estimated Total</span>
+            <span id="cart-total-val" class="text-accent">₹0.00</span>
+          </div>
+        </div>
+
+        <button id="place-order-btn" class="btn btn-primary w-full btn-lg" onclick="customerApp.placeOrder()">
+          Place Order
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. MY ORDERS TAB VIEW -->
+    <div id="view-orders" class="tab-view" style="display: none;">
+      <h2 class="font-bold text-xl" style="margin-bottom: 1rem;">Kitchen Order History</h2>
+      <div id="orders-list-container"></div>
+    </div>
+
+    <!-- 4. RUNNING BILL & PAST BILLS TAB VIEW -->
+    <div id="view-bill" class="tab-view" style="display: none;">
+      <h2 class="font-bold text-xl" style="margin-bottom: 1rem;">Current Table Bill</h2>
+      <div id="running-bill-container" style="margin-bottom: 2rem;"></div>
+
+      <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 1rem;">
+        <h2 class="font-bold text-xl" style="margin-bottom: 1rem;">📜 My Past Invoices & History</h2>
+        <div id="past-bills-container"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sticky Bottom Navigation Bar -->
+  <nav class="customer-bottom-nav">
+    <a id="nav-menu" class="nav-item active" onclick="customerApp.switchTab('menu')">
+      <div class="nav-item-icon">📋</div>
+      <span>Menu</span>
+    </a>
+    
+    <a id="nav-cart" class="nav-item" onclick="customerApp.switchTab('cart')">
+      <div class="nav-item-icon">
+        🛒
+        <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+      </div>
+      <span>Cart</span>
+    </a>
+
+    <a id="nav-orders" class="nav-item" onclick="customerApp.switchTab('orders')">
+      <div class="nav-item-icon">👨‍🍳</div>
+      <span>Orders</span>
+    </a>
+
+    <a id="nav-bill" class="nav-item" onclick="customerApp.switchTab('bill')">
+      <div class="nav-item-icon">🧾</div>
+      <span>Bill</span>
+    </a>
+  </nav>
+
+  <!-- Registration Modal -->
+  <div id="registration-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="reg-modal-title" class="font-bold text-lg">Welcome Guest!</h3>
+      </div>
+      <form onsubmit="customerApp.submitRegistration(event)">
+        <div class="modal-body">
+          <p class="text-sm text-secondary" style="margin-bottom: 1.25rem;">
+            Please enter your name and 10-digit mobile number to begin dining at your table.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mobile Number (Primary Profile ID)</label>
+            <input type="tel" id="reg-mobile" class="form-control" placeholder="10-digit Mobile Number (e.g. 9876543210)" maxlength="10" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary w-full btn-lg">Start Dining & View Menu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CUSTOMER INVOICE PRINT MODAL -->
+  <div id="customer-invoice-modal" class="modal-overlay">
+    <div class="modal-container" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="font-bold text-lg">Tax Invoice</h3>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('customer-invoice-modal').classList.remove('active')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="customer-invoice-area"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Bill</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Firebase Web SDK Compat CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/seed-data.js"></script>
+  <script src="js/db-service.js"></script>
+  <script src="js/auth-service.js"></script>
+  <script src="js/customer.js"></script>
+</body>
+</html>

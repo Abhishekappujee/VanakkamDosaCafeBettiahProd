@@ -1,0 +1,88 @@
+{
+  "rules": {
+    ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'",
+    ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'",
+
+    "businessProfile": {
+      ".read": true,
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'"
+    },
+
+    "products": {
+      ".read": true,
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "categories": {
+      ".read": true,
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "tables": {
+      ".read": true,
+      "tbl_01": { ".write": true },
+      "$tableId": {
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+      }
+    },
+
+    "diningSessions": {
+      ".read": "auth != null || true",
+      "$sessionId": {
+        ".write": "auth != null || (!data.exists() && newData.child('status').val() === 'ACTIVE') || (data.exists() && data.child('customerId').val() === newData.child('customerId').val())"
+      }
+    },
+
+    "orders": {
+      ".read": true,
+      "$orderId": {
+        ".write": "auth != null || !data.exists() || (data.child('customerId').val() === newData.child('customerId').val())"
+      }
+    },
+
+    "kots": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "invoices": {
+      ".read": true,
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "payments": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "inventory": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "inventoryMovements": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    },
+
+    "expenses": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'"
+    },
+
+    "capital": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'"
+    },
+
+    "managers": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'super_admin'"
+    },
+
+    "inventoryRequests": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'cafe_manager')"
+    }
+  }
+}

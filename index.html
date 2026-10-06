@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhijeet Gourmet Cafe | Commercial Restaurant POS & QR Ordering Platform</title>
+
+  <!-- Google Fonts Outfit & Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Connection Status Banner -->
+  <div id="connection-status-banner"></div>
+
+  <!-- Main Navigation Header -->
+  <header class="glass-header" style="position: sticky; top: 0; z-index: 100; padding: 1rem 2rem;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 0.875rem;">
+        <div style="font-size: 1.8rem;">🍽️</div>
+        <div>
+          <h1 style="font-size: 1.25rem; font-weight: 800;" class="text-gradient">
+            Abhijeet Gourmet Cafe
+          </h1>
+          <div class="text-xs text-secondary">Commercial QR Ordering, POS & Table Management Platform</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <button class="btn btn-secondary btn-sm" onclick="openLoginModal('cafe_manager')">💼 Cafe Manager POS</button>
+        <button class="btn btn-primary btn-sm" onclick="openLoginModal('super_admin')">👑 Super Admin</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main style="max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem;">
+    <div class="glass-card" style="padding: 3rem 2rem; text-align: center; margin-bottom: 3rem;">
+      <span class="badge badge-info" style="margin-bottom: 1rem;">Enterprise Restaurant OS</span>
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">
+        Contactless QR Table Ordering & Powerful POS Operating System
+      </h2>
+      <p class="text-secondary" style="max-width: 680px; margin: 0 auto 2rem auto; font-size: 1.05rem;">
+        Seamless customer self-ordering, real-time kitchen order tickets (KOT), atomic table occupancy management, multi-order billing, and real-time revenue analytics.
+      </p>
+
+      <!-- Customer QR Simulator Box -->
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; max-width: 600px; margin: 0 auto; box-shadow: var(--shadow-md);">
+        <h3 class="font-bold text-lg" style="margin-bottom: 0.5rem;">📱 Customer Table QR Simulator</h3>
+        <p class="text-xs text-muted" style="margin-bottom: 1.25rem;">Select a table below to simulate scanning a customer QR code:</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
+          <a href="customer.html?table=tbl_01" class="btn btn-secondary btn-sm">Table 01</a>
+          <a href="customer.html?table=tbl_02" class="btn btn-secondary btn-sm">Table 02</a>
+          <a href="customer.html?table=tbl_03" class="btn btn-secondary btn-sm">Table 03</a>
+          <a href="customer.html?table=tbl_04" class="btn btn-secondary btn-sm">Table 04</a>
+        </div>
+
+        <div class="flex justify-center gap-3">
+          <button class="btn btn-primary" onclick="openLoginModal('cafe_manager')">Open POS Manager Terminal</button>
+          <button class="btn btn-secondary" onclick="openLoginModal('super_admin')">Open Super Admin Portal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Overview Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      <div class="glass-card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">📲</div>
+        <h3 class="font-bold text-lg" style="margin-bottom: 0.5rem;">Customer QR Self-Ordering</h3>
+        <p class="text-sm text-secondary">
+          No app download required. Customers scan table QR code, register with mobile number, and place multi-course orders with instant kitchen updates.
+        </p>
+      </div>
+
+      <div class="glass-card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">🖥️</div>
+        <h3 class="font-bold text-lg" style="margin-bottom: 0.5rem;">Touchscreen POS & KOT</h3>
+        <p class="text-sm text-secondary">
+          Visual table grid, quick walk-in order creation, kitchen order ticket printing, and real-time approval queues designed for fast restaurant shifts.
+        </p>
+      </div>
+
+      <div class="glass-card" style="padding: 1.5rem;">
+        <div style="font-size: 2rem; margin-bottom: 0.75rem;">📈</div>
+        <h3 class="font-bold text-lg" style="margin-bottom: 0.5rem;">Inventory & Revenue Control</h3>
+        <p class="text-sm text-secondary">
+          Automated raw material stock deduction, stock movement tracking, expense ledgers, tax invoices, and real-time daily sales analytics.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-login-title" class="font-bold text-lg">Account Sign In</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeLoginModal()">✕</button>
+      </div>
+      <form onsubmit="handleLoginSubmit(event)">
+        <div class="modal-body">
+          <input type="hidden" id="login-role">
+          
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="name@abhijeetcafe.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <div id="demo-credentials-hint" class="text-xs text-muted" style="background: var(--bg-tertiary); padding: 0.75rem; border-radius: var(--radius-sm); margin-top: 0.5rem;"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
+          <button type="submit" id="login-submit-btn" class="btn btn-primary">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase Web SDK Compat CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/seed-data.js"></script>
+  <script src="js/db-service.js"></script>
+  <script src="js/auth-service.js"></script>
+
+  <script>
+    function openLoginModal(role) {
+      document.getElementById('login-role').value = role;
+      const title = role === 'super_admin' ? 'Super Admin Portal Sign In' : 'Cafe Manager POS Sign In';
+      const hint = role === 'super_admin' 
+        ? '<strong>Demo Admin:</strong> admin@abhijeetcafe.com / admin123'
+        : '<strong>Demo Manager:</strong> manager@abhijeetcafe.com / manager123';
+      
+      document.getElementById('modal-login-title').textContent = title;
+      document.getElementById('demo-credentials-hint').innerHTML = hint;
+      document.getElementById('login-email').value = role === 'super_admin' ? 'admin@abhijeetcafe.com' : 'manager@abhijeetcafe.com';
+      document.getElementById('login-password').value = role === 'super_admin' ? 'admin123' : 'manager123';
+      
+      document.getElementById('login-modal').classList.add('active');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal').classList.remove('active');
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const role = document.getElementById('login-role').value;
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      const btn = document.getElementById('login-submit-btn');
+      btn.disabled = true;
+      btn.textContent = "Authenticating...";
+
+      try {
+        const user = await window.authService.login(email, password, role);
+        window.showToast(`Welcome back, ${user.name}!`, "success");
+        setTimeout(() => {
+          window.location.href = role === 'super_admin' ? 'admin.html' : 'manager.html';
+        }, 400);
+      } catch(err) {
+        window.showToast(err.message, "danger");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+      }
+    }
+  </script>
+</body>
+</html>
