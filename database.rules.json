@@ -1,0 +1,134 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": "newData.exists() && newData.hasChildren(['businessProfile', 'landingConfig', 'products', 'categories', 'tables'])",
+
+    "businessProfile": {
+      ".read": true,
+      ".write": "newData.exists()"
+    },
+
+    "landingConfig": {
+      ".read": true,
+      ".write": "newData.exists()"
+    },
+
+    "products": {
+      ".read": true,
+      ".indexOn": ["category", "isAvailable"],
+      "$productId": {
+        ".write": true
+      }
+    },
+
+    "categories": {
+      ".read": true,
+      "$categoryId": {
+        ".write": true
+      }
+    },
+
+    "tables": {
+      ".read": true,
+      ".indexOn": ["status"],
+      "$tableId": {
+        ".write": true
+      }
+    },
+
+    "diningSessions": {
+      ".read": true,
+      ".indexOn": ["tableId", "status", "customerId"],
+      "$sessionId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "customers": {
+      ".read": true,
+      ".indexOn": ["mobile"],
+      "$customerId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "orders": {
+      ".read": true,
+      ".indexOn": ["sessionId", "status", "tableId"],
+      "$orderId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "kots": {
+      ".read": true,
+      ".indexOn": ["sessionId", "status"],
+      "$kotId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "invoices": {
+      ".read": true,
+      ".indexOn": ["sessionId", "createdAt", "customerMobile"],
+      "$invoiceId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "payments": {
+      ".read": true,
+      ".indexOn": ["sessionId", "createdAt", "paymentMode"],
+      "$paymentId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "inventory": {
+      ".read": true,
+      ".indexOn": ["category", "currentQuantity"],
+      "$inventoryId": {
+        ".write": true
+      }
+    },
+
+    "inventoryMovements": {
+      ".read": true,
+      ".indexOn": ["inventoryId", "timestamp", "type"],
+      "$movementId": {
+        ".write": "newData.exists()"
+      }
+    },
+
+    "expenses": {
+      ".read": true,
+      ".indexOn": ["category", "date"],
+      "$expenseId": {
+        ".write": true
+      }
+    },
+
+    "capital": {
+      ".read": true,
+      ".indexOn": ["category", "date"],
+      "$capitalId": {
+        ".write": true
+      }
+    },
+
+    "managers": {
+      ".read": true,
+      "$managerId": {
+        ".write": true
+      }
+    },
+
+    "inventoryRequests": {
+      ".read": true,
+      ".indexOn": ["status", "timestamp"],
+      "$requestId": {
+        ".write": true
+      }
+    }
+  }
+}
