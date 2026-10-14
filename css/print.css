@@ -1,0 +1,175 @@
+/* Thermal & Browser Printer Stylesheet */
+
+@media print {
+  /* Reset page & backgrounds for clean thermal printing */
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  }
+
+  /* 1. Hide ALL background page layout, sidebars, headers, cards, food images & buttons */
+  body > *:not(.modal-overlay.active),
+  .sidebar,
+  .top-navbar,
+  .main-content,
+  .customer-bottom-nav,
+  .manager-view-panel,
+  .admin-main,
+  .pos-container,
+  .pos-menu-grid,
+  .pos-sidebar,
+  .dashboard-header,
+  .glass-card,
+  .modal-header,
+  .modal-footer,
+  .btn,
+  #toast-container,
+  #connection-status-banner,
+  .no-print,
+  img:not(.receipt-logo) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+  }
+
+  /* 2. ONLY position & display active modal container */
+  body > .modal-overlay.active,
+  .modal-overlay.active {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .modal-overlay.active .modal-container,
+  .modal-overlay.active .modal-body {
+    position: static !important;
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* 3. Target Printable Receipt Container (80mm width) */
+  .printable-area {
+    visibility: visible !important;
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 80mm !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 10px 12px !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .printable-area * {
+    visibility: visible !important;
+    color: #000000 !important;
+  }
+
+  /* Centered Table & Text Alignment */
+  .receipt-header {
+    text-align: center !important;
+  }
+
+  .receipt-title {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    color: #000000 !important;
+    margin-bottom: 3px !important;
+  }
+
+  .receipt-subtext {
+    font-size: 10px !important;
+    color: #333333 !important;
+  }
+
+  .receipt-divider {
+    border-top: 1.5px dashed #000000 !important;
+    margin: 8px 0 !important;
+  }
+
+  .receipt-meta-grid {
+    font-size: 10px !important;
+  }
+
+  .receipt-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 6px 0 !important;
+  }
+
+  .receipt-table th {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    border-bottom: 1.5px solid #000000 !important;
+    padding: 5px 2px !important;
+    color: #000000 !important;
+    text-transform: uppercase !important;
+  }
+
+  .receipt-table td {
+    font-size: 10px !important;
+    padding: 5px 2px !important;
+    border-bottom: 1px dashed #cccccc !important;
+    color: #000000 !important;
+  }
+
+  .receipt-grand-total {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    border-top: 1.5px solid #000000 !important;
+    border-bottom: 1.5px solid #000000 !important;
+    padding: 6px 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-top: 6px !important;
+  }
+
+  .receipt-footer {
+    text-align: center !important;
+    margin-top: 8px !important;
+    font-size: 9px !important;
+  }
+
+  @page {
+    size: 80mm auto;
+    margin: 0;
+  }
+}
